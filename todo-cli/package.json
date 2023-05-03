@@ -13,7 +13,7 @@
       "prettier --write ."
     ]
   },
-  "author": "SEENIVASANIT",
+  "author": "HICET",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.34.0",
