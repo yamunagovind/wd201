@@ -58,28 +58,28 @@ const tomorrow = formattedDate(
   new Date(new Date().setDate(dateToday.getDate() + 1))
 );
 
-todos.add({ title: 'Submit assignment', dueDate: yesterday, completed: false })
-todos.add({ title: 'Pay rent', dueDate: today, completed: true })
-todos.add({ title: 'Service Vehicle', dueDate: today, completed: false })
-todos.add({ title: 'File taxes', dueDate: tomorrow, completed: false })
-todos.add({ title: 'Pay electric bill', dueDate: tomorrow, completed: false })
+todos.add({ title: "Submit assignment", dueDate: yesterday, completed: false });
+todos.add({ title: "Pay fees", dueDate: today, completed: true });
+todos.add({ title: "Service car", dueDate: today, completed: false });
+todos.add({ title: "pay taxes", dueDate: tomorrow, completed: false });
+todos.add({ title: "Pay bill", dueDate: tomorrow, completed: false });
 
-console.log("My Todo-list\n\n");
+console.log("My Todo-list\n");
 
 console.log("Overdue");
 var overdues = todos.overdue();
 var Overdues = todos.toDisplayableList(overdues);
 console.log(Overdues);
-console.log("\n\n");
+console.log("\n");
 
 console.log("Due Today");
 let itemsDueToday = todos.dueToday();
 let ItemsDueToday = todos.toDisplayableList(itemsDueToday);
 console.log(ItemsDueToday);
-console.log("\n\n");
+console.log("\n");
 
 console.log("Due Later");
 let itemsDueLater = todos.dueLater();
 let formattedItemsDueLaters = todos.toDisplayableList(itemsDueLater);
 console.log(formattedItemsDueLaters);
-console.log("\n\n");
+console.log("\n");
