@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.7.2.min.js"
+    ></script>
+    <style>
+      body {
+        font-family: monospace;
+      }
+
+      .card {
+        padding: 10px;
+        margin: 0 auto;
+        width: 400px;
+        height: auto;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.37);
+        -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.37);
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.37);
+      }
+      .table-card {
+        width: 800px;
+        margin-top: 15px;
+      }
+      .registerform-content {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 600;
+        font-style: Bold;
+        padding-bottom: 15px;
+        color: #000000;
+      }
+      .input-wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0px;
+        align-items: center;
+      }
+      .form-input {
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: rgb(236, 236, 236);
+        border: none;
+        width: 150px;
+        height: 32px;
+        -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+        transition-duration: 0.4s;
+      }
+      .form-input:hover {
+        border: none;
+        outline: none;
+        box-shadow: none;
+      }
+      .submit-button {
+        padding: 10px;
+        width: 100px;
+        background-color: #00e676;
+        border: none;
+        border-radius: 5px;
+        color: #ffffff;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table tbody tr:nth-child(1) td {
+        font-weight: bold;
+        border: none;
+      }
+      td {
+        border: 1px solid rgb(216 216 216);
+        text-align: center;
+      }
+
+      #terms {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="card">
+        <div class="registerform-content">Registration Form</div>
+
+        <form
+          class="form-content"
+          id="registrationForm"
+          onsubmit="form_validate();return false"
+        >
+          <div class="input-wrapper">
+            <label for="fname">Name:</label>
+            <input
+              class="form-input"
+              type="text"
+              id="name"
+              name="name"
+              value=""
+              placeholder="Enter full name"
+              required
+            />
+          </div>
+          <div class="input-wrapper">
+            <label for="fname">Email:</label>
+            <input
+              class="form-input"
+              type="email"
+              id="email"
+              placeholder="Enter email"
+              required
+            />
+          </div>
+          <div class="input-wrapper">
+            <label for="fname">Password:</label>
+            <input
+              class="form-input"
+              type="password"
+              id="password"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+          <div class="input-wrapper">
+            <label for="fname">Date of Birth:</label>
+            <input
+              class="form-input"
+              type="date"
+              id="dob"
+              max="2005-02-16"
+              min="1968-02-16"
+              required
+            />
+          </div>
+          <div>
+            <label for="terms">
+              <input id="logCheck" type="checkbox" required />Accept Terms &
+              Conditions
+            </label>
+          </div>
+          <button type="submit" class="submit-button" value="Submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="show-data-for-log">
+      <table class="table table-bordered" id="regTable">
+        <thead>
+          <th colspan="5" id="enters">Entries</th>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Dob</th>
+            <th>Accepted terms?</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script>
+      pwShowHide = document.querySelectorAll(".showHidePw");
+      pwFields = document.querySelectorAll(".password");
+
+      pwShowHide.forEach((eyeIcon) => {
+        eyeIcon.addEventListener("click", () => {
+          pwFields.forEach((pwField) => {
+            if (pwField.type === "password") {
+              pwField.type = "text";
+
+              pwShowHide.forEach((icon) => {
+                icon.classList.replace("uil-eye-slash", "uil-eye");
+              });
+            } else {
+              pwField.type = "password";
+
+              pwShowHide.forEach((icon) => {
+                icon.classList.replace("uil-eye", "uil-eye-slash");
+              });
+            }
+          });
+        });
+      });
+      const form_validate = () => {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const psw = document.getElementById("password").value;
+        const dob = document.getElementById("dob").value;
+        const check = document.getElementById("logCheck").checked;
+        var Entries;
+        if (localStorage.getItem("user-entries") === null) Entries = [];
+        else Entries = JSON.parse(localStorage.getItem("user-entries"));
+        Entries.unshift({
+          name: name,
+          email: email,
+          psw: psw,
+          dob: dob,
+          check: check,
+        });
+        localStorage.setItem("user-entries", JSON.stringify(Entries));
+        showdata();
+      };
+      const showdata = () => {
+        var Entries;
+        if (localStorage.getItem("user-entries") === null) Entries = [];
+        else Entries = JSON.parse(localStorage.getItem("user-entries"));
+
+        var html = "";
+
+        Entries.forEach((element, intex) => {
+          html += "<tr>";
+          html += "<td>" + element.name + "</td>";
+          html += "<td>" + element.email + "</td>";
+          html += "<td>" + element.psw + "</td>";
+          html += "<td>" + element.dob + "</td>";
+          html += "<td>" + element.check + "</td>";
+          html += "</tr>";
+        });
+        document.querySelector("#regTable tbody").innerHTML = html;
+      };
+      document.onload = showdata();
+    </script>
+  </body>
+</html>
